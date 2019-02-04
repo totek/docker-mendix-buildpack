@@ -10,6 +10,10 @@ LABEL maintainer="digitalecosystems@mendix.com"
 # Build-time variables
 ARG BUILD_PATH=project
 ARG DD_API_KEY
+ARG APPMETRICS_AAI
+ARG APPMETRICS_TARGET
+ARG APPMETRICS_PROMETHEUS
+ARG APPMETRICS_GRAYLOG
 
 # Checkout CF Build-pack here
 RUN mkdir -p buildpack/.local && \
