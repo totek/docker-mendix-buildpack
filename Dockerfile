@@ -37,8 +37,8 @@ RUN "/buildpack/compilation" /build /cache && \
   rm -fr /cache /tmp/javasdk /tmp/opt
 
 # Temporary fix of setting timezone manually for Philips
-RUN sudo echo "Europe/Amsterdam" > /etc/timezone
-RUN sudo dpkg-reconfigure -f noninteractive tzdata
+RUN echo "Europe/Amsterdam" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Expose nginx port
 ENV PORT 80
