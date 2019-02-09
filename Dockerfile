@@ -8,16 +8,16 @@ FROM balenalib/raspberry-pi-debian-openjdk:jessie
 LABEL Author="Mendix Digital Ecosystems"
 LABEL maintainer="digitalecosystems@mendix.com"
 
+# When doing a full build: install dependencies & remove package lists
+RUN apt-get -q -y update && \
+ DEBIAN_FRONTEND=noninteractive apt-get upgrade -q -y && \
+ DEBIAN_FRONTEND=noninteractive apt-get install -q -y python3 wget curl libgdiplus libpq5 locales && \
+ rm -rf /var/lib/apt/lists/*
+
 # Set the locale
 RUN locale-gen en_US.UTF-8  
 ENV LANG en_US.UTF-8  
 ENV LC_ALL en_US.UTF-8 
-
-# When doing a full build: install dependencies & remove package lists
-RUN apt-get -q -y update && \
- DEBIAN_FRONTEND=noninteractive apt-get upgrade -q -y && \
- DEBIAN_FRONTEND=noninteractive apt-get install -q -y python3 wget curl libgdiplus libpq5 && \
- rm -rf /var/lib/apt/lists/*
 
 # Build-time variables
 ARG BUILD_PATH=project
@@ -46,7 +46,7 @@ RUN "/buildpack/compilation" /build /cache && \
 
 # Expose nginx port
 ENV PORT 80
-EXPOSE $PORT+1
+EXPOSE 81
 
 RUN mkdir -p "/.java/.userPrefs/com/mendix/core"
 RUN mkdir -p "/root/.java/.userPrefs/com/mendix/core"
