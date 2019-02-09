@@ -25,7 +25,7 @@ ARG DD_API_KEY
 
 # Checkout CF Build-pack here
 RUN mkdir -p buildpack/.local && \
-   (wget -qO- https://github.com/mendix/cf-mendix-buildpack/archive/master.tar.gz \
+   (wget -qO- https://github.com/mxclyde/cf-mendix-buildpack/archive/pi.tar.gz \
    | tar xvz -C buildpack --strip-components 1)
 
 # Copy python scripts which execute the buildpack (exporting the VCAP variables)
