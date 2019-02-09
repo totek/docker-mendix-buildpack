@@ -3,9 +3,21 @@
 #
 # Author: Mendix Digital Ecosystems, digitalecosystems@mendix.com
 # Version: 1.5
-FROM mendix/rootfs
+FROM balenalib/raspberry-pi-debian-openjdk:latest
+#This version does a full build originating from the Ubuntu Docker images
 LABEL Author="Mendix Digital Ecosystems"
 LABEL maintainer="digitalecosystems@mendix.com"
+
+# Set the locale
+RUN locale-gen en_US.UTF-8  
+ENV LANG en_US.UTF-8  
+ENV LC_ALL en_US.UTF-8 
+
+# When doing a full build: install dependencies & remove package lists
+RUN apt-get -q -y update && \
+ DEBIAN_FRONTEND=noninteractive apt-get upgrade -q -y && \
+ DEBIAN_FRONTEND=noninteractive apt-get install -q -y python3 wget curl libgdiplus libpq5 && \
+ rm -rf /var/lib/apt/lists/*
 
 # Build-time variables
 ARG BUILD_PATH=project
@@ -44,4 +56,5 @@ RUN ln -s "/.java/.userPrefs/com/mendix/core/prefs.xml" "/root/.java/.userPrefs/
 COPY scripts/ /build
 WORKDIR /build
 RUN chmod u+x startup
+ENV INITSYSTEM=on
 ENTRYPOINT ["/build/startup","/buildpack/start.py"]
