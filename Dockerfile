@@ -3,7 +3,7 @@
 #
 # Author: Mendix Digital Ecosystems, digitalecosystems@mendix.com
 # Version: 1.5
-FROM balenalib/raspberry-pi-debian-openjdk:latest
+FROM balenalib/raspberry-pi-debian-openjdk:jessie
 #This version does a full build originating from the Ubuntu Docker images
 LABEL Author="Mendix Digital Ecosystems"
 LABEL maintainer="digitalecosystems@mendix.com"
