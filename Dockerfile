@@ -15,9 +15,9 @@ RUN apt-get -q -y update && \
  rm -rf /var/lib/apt/lists/*
 
 # Set the locale
-RUN locale-gen en_US.UTF-8  
-ENV LANG en_US.UTF-8  
-ENV LC_ALL en_US.UTF-8 
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
 
 # Build-time variables
 ARG BUILD_PATH=project
