@@ -3,9 +3,20 @@
 #
 # Author: Mendix Digital Ecosystems, digitalecosystems@mendix.com
 # Version: 1.5
-FROM mendix/rootfs:bionic
+FROM ubuntu:bionic
 LABEL Author="Mendix Digital Ecosystems"
 LABEL maintainer="digitalecosystems@mendix.com"
+
+#Install dependencies & remove package lists
+RUN apt-get -q -y update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -q -y wget curl libpq5 locales python3 python3-distutils libssl1.0.0 libgdiplus libpython2.7 && \
+  rm -rf /var/lib/apt/lists/*
+
+#Set Locale to UTF-8 (needed for proper python3 functioning)
+RUN locale-gen en_US.UTF-8  
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8  
 
 # Build-time variables
 ARG BUILD_PATH=project
