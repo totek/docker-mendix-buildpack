@@ -44,7 +44,8 @@ ENV PYTHONPATH "/buildpack/lib/"
 # 3. Create mendix user with home directory at /root
 # 4. Change ownership of /build /buildpack /.java /root to mendix
 WORKDIR /buildpack
-RUN "/buildpack/compilation" /build /cache &&\
+RUN chmod u+x "/buildpack/compilation" &&\ 
+    "/buildpack/compilation" /build /cache &&\
     rm -fr /cache /tmp/javasdk /tmp/opt &&\
     useradd -r -U -d /root mendix &&\
     chown -R mendix /buildpack /build /.java /root 
