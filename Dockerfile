@@ -53,6 +53,7 @@ RUN chmod u+x "/buildpack/compilation" &&\
 # Copy start scripts
 COPY --chown=mendix:mendix scripts/startup /build
 COPY --chown=mendix:mendix scripts/vcap_application.json /build
+RUN chmod u+x /build/startup
 WORKDIR /build
 
 USER mendix
