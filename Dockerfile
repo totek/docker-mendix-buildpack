@@ -3,7 +3,7 @@
 #
 # Author: Mendix Digital Ecosystems, digitalecosystems@mendix.com
 # Version: 1.5
-FROM mendix/rootfs:bionic
+FROM mxclyde/rootfs:bionic
 LABEL Author="Mendix Digital Ecosystems"
 LABEL maintainer="digitalecosystems@mendix.com"
 
