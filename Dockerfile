@@ -46,7 +46,7 @@ ENV PYTHONPATH "/buildpack/lib/"
 WORKDIR /buildpack
 RUN "/buildpack/compilation" /build /cache &&\
     rm -fr /cache /tmp/javasdk /tmp/opt &&\
-    useradd -r -U -d /root mendix &&\
+    useradd -r -U -u 1050 -d /root mendix &&\
     chown -R mendix /buildpack /build /.java /root 
 
 # Copy start scripts
@@ -54,7 +54,7 @@ COPY --chown=mendix:mendix scripts/startup /build
 COPY --chown=mendix:mendix scripts/vcap_application.json /build
 WORKDIR /build
 
-USER mendix
+USER 1050
 
 # Expose nginx port
 ENV PORT 8080
