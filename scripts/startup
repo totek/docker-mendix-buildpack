@@ -113,5 +113,5 @@ if __name__ == '__main__':
     export_k8s_instance()
     
     export_encoded_cacertificates()
-    call_builpack_startup()
+    call_buildpack_startup()
     sys.exit(0)
