@@ -70,7 +70,7 @@ def call_buildpack_startup():
 
     signal.signal(signal.SIGCHLD, sigchld_handler)
 
-    proc = subprocess.Popen(["python3", STARTUP_PATH], cwd='/opt/mendix/build')
+    proc = subprocess.Popen(["python3", STARTUP_PATH], cwd='/build')
     
     # Forward SIGTERM to allow a clean shutdown
     def sig_forwarder(_signo, _stack_frame):
