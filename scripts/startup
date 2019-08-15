@@ -6,6 +6,7 @@ import re
 import subprocess
 import sys
 import base64
+import signal
 
 STARTUP_PATH = sys.argv[1]
 
@@ -88,10 +89,28 @@ def export_encoded_cacertificates():
         logging.info("Decoding encoded CA certificates into CERTIFICATE_AUTHORITIES environment variable")
         certificate_authorities = base64.b64decode(certificate_authorities_base64)
         os.environ['CERTIFICATE_AUTHORITIES'] = str(certificate_authorities,'utf-8')
-            
-def call_builpack_startup():
-    logging.debug("Executing call_builpack_startup...")
-    subprocess.call(["python3", STARTUP_PATH])
+
+def sigchld_handler(_signo, _stack_frame):
+    # reap zombies
+    logging.debug("Child process has exited, getting result")
+    (waitpid, result) = os.waitpid(-1, os.WNOHANG)
+    logging.debug("Child process %s has exited with result %s" % (waitpid, result))
+    
+def call_buildpack_startup():
+    logging.debug("Executing call_buildpack_startup...")
+
+    signal.signal(signal.SIGCHLD, sigchld_handler)
+
+    proc = subprocess.Popen(["python3", STARTUP_PATH], cwd='/opt/mendix/build')
+    
+    # Forward SIGTERM to allow a clean shutdown
+    def sig_forwarder(_signo, _stack_frame):
+        logging.debug("Forwarding SIGTERM to child process")
+        os.kill(proc.pid, _signo)
+    
+    signal.signal(signal.SIGTERM, sig_forwarder)
+
+    proc.wait()
 
 def get_welcome_header():
     welcome_ascii_header = '''
