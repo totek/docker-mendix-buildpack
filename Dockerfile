@@ -22,7 +22,9 @@ ARG CF_BUILDPACK=master
 # 5. Update the owner and group for /opt/mendix so that the app can run as a non-root user
 # 6. Update permissions for /opt/mendix so that the app can run as a non-root user
 # 7. Allow the root group to modify /etc/passwd so that the startup script can update the non-root uid
-RUN mkdir -p /opt/mendix/buildpack /opt/mendix/build &&\
+RUN wget https://mxblobstore.azureedge.net/mxblobstore/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb &&\
+   dpkg -i libpng12-0_1.2.54-1ubuntu1.1_amd64.deb &&\
+   mkdir -p /opt/mendix/buildpack /opt/mendix/build &&\
    useradd -r -g root -d /opt/mendix/build mendix &&\
    echo "CF Buildpack version ${CF_BUILDPACK}" &&\
    wget -qO- https://github.com/mendix/cf-mendix-buildpack/archive/${CF_BUILDPACK}.tar.gz | tar xvz -C /opt/mendix/buildpack --strip-components 1 &&\
