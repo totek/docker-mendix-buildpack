@@ -12,7 +12,7 @@ RUN apt-get -q -y update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -q -y wget curl libpq5 locales python3 python3-distutils libssl1.0.0 libgdiplus libpython2.7 && \
   rm -rf /var/lib/apt/lists/* && \
   wget https://mxblobstore.azureedge.net/mxblobstore/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb &&\
-  dpkg -i libpng12-0_1.2.54-1ubuntu1.1_amd64.deb &&\
+  dpkg -i libpng12-0_1.2.54-1ubuntu1.1_amd64.deb
 
 #Set Locale to UTF-8 (needed for proper python3 functioning)
 RUN locale-gen en_US.UTF-8  
